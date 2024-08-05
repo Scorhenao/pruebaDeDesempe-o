@@ -29,7 +29,7 @@ id!: number;
     allowNull: false,
     unique: true,
 })
-name!: string;
+name!: string; //Admin or Client
 
 // Define la relación de uno a muchos con el modelo Task.
 @HasMany(() => User)

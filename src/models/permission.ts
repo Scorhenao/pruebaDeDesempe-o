@@ -6,7 +6,7 @@ DataType, // Tipos de datos de Sequelize.
 PrimaryKey, // Decorador para definir una clave primaria.
 AutoIncrement, // Decorador para definir una columna con incremento automático.
 BelongsTo,
-ForeignKey,
+ForeignKey
 } from "sequelize-typescript";
 import { Role } from './role';
 import { Entity } from "./entity";

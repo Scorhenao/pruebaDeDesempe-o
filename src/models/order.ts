@@ -1,4 +1,3 @@
-import { Product } from './product';
 import {
 Table, // Decorador para definir una tabla de la base de datos.
 Column, // Decorador para definir una columna de la tabla.

@@ -26,31 +26,27 @@ export class Product extends Model {
     // Define la columna 'email' con tipo STRING que no puede ser nula y debe ser única.
     @Column({
         type: DataType.STRING(200),
-        allowNull: false,
-        unique: true,
+        allowNull: true
     })
     name!: string;
 
     // Define la columna 'password' con tipo STRING que no puede ser nula y debe ser única.
     @Column({
         type: DataType.DECIMAL(10,2),
-        allowNull: false,
-        unique: true,
+        allowNull: true
     })
     price!: DecimalDataType;
     
 
     @Column({
         type: DataType.TEXT,
-        allowNull: false,
-        unique: true,
+        allowNull: true
     })
     description!: string;
 
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
-        unique: true,
+        allowNull: true
     })
     stock!: number;
 
