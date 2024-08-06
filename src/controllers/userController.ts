@@ -18,32 +18,11 @@ export default class UserController {
     res.json(user); // Envía el usuario encontrado como respuesta en formato JSON.
   }
 
-  // Método estático para crear un nuevo usuario.
+  // Método estático para crear un nuevo usuario
   static async createUser(req: Request, res: Response) {
-    const { name, email, password } = req.body;
-    const role = req.body.role || 'client';
-  
-    // Validar que todos los campos requeridos estén presentes
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: 'All fields (name, email, password, role) are required' });
-    }
-  
-    // Validar que el rol sea válido
-    if (role !== 'premium' && role !== 'normal') {
-      return res.status(400).json({ message: 'Role must be "premium" or "normal"' });
-    }
-  
-    try {
-      const userService = container.resolve(UserService);
-      const user = await userService.createUser(req.body);
-      res.status(201).json(user); // Responder con el usuario creado
-    } catch (error) {
-      if (error instanceof Error) {
-        res.status(400).json({ message: error.message });
-      } else {
-        res.status(400).json({ message: 'An unknown error occurred' });
-      }
-    }
+    const userService = container.resolve(UserService);
+    const user = await userService.createUser(req.body.email, req.body.password);
+    res.json(user);
   }
 
   // Metodo estatuco para crear los roles de manera quemada

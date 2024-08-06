@@ -29,7 +29,7 @@ export default class ProductService {
         return await this.productRepository.create(product); // Llama al método create del repositorio de tareas para crear una nueva tarea.
     }
 
-    // Método para actualizar una tarea existente.
+    // Método para actualizar un producto existente.
     async updateProduct(product:Product){
         return await this.productRepository.update(product);
     }

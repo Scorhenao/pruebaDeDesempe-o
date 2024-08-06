@@ -26,7 +26,7 @@ export default class ProductRepository {
         return await Product.create(product); // Utiliza el método create de Sequelize para insertar una nueva tarea en la base de datos.
     }
 
-    // Método para actualizar una tarea existente por su ID.
+    // Método para actualizar una productos existentes por su ID y su stock.
     async update(product:Product){
         Product.findOne({ where: { id: product.id }}).then(productParam => {
             if (productParam){

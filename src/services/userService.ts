@@ -34,13 +34,9 @@ export default class UserService {
     return await this.userRepository.createRoles();
   }
 
-  // Método para crear un nuevo usuario. 1 admin 2 client
-  async createUser(userData: { name: string, email: string, password: string, role: number }) {
-    const user = new User(); // Crea una nueva instancia del modelo de usuario.
-    user.email = userData.email; // Asigna el correo electrónico del usuario.
-    await user.setPassword(userData.password); // Asegúrate de cifrar la contraseña del usuario.
-
-    return await user.save(); // Guarda el usuario en la base de datos.
+  // Método para crear un nuevo usuario.
+  async createUser(email: string, password: string) {
+    return await this.userRepository.create(email, password);
   }
 
   async login(email: string, password: string) {

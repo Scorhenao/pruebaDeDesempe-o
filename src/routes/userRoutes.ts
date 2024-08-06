@@ -18,6 +18,7 @@ userRouter.get('/:id', UserController.getUserById);
 // Cuando se hace una solicitud POST a '/users', se llama al método createUser del UserController.
 userRouter.post('/', UserController.createUser);
 
+
 // Cuando se hace una solicitud POST a '/users/login', se llama al metodo login del AuthController.
 userRouter.post('/login', AuthController.login); // Ruta para inicio de sesión
 

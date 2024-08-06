@@ -1,15 +1,15 @@
-import OrderRepository from '../repositories/orderRepository'; // Importa el repositorio de tareas que maneja las operaciones con la base de datos.
-import { CreationAttributes } from 'sequelize'; // Importa el tipo CreationAttributes de Sequelize, que define los atributos para crear un nuevo registro.
-import { injectable, inject } from 'tsyringe'; // Importa decorators para inyección de dependencias.
-import { Order } from '../models'; // Importa el modelo de tarea.
+import OrderRepository from '../repositories/orderRepository'; 
+import { CreationAttributes } from 'sequelize';
+import { injectable, inject } from 'tsyringe'; 
+import { Order } from '../models'; 
 
-@injectable() // Marca esta clase como un servicio que puede ser inyectado en otros lugares mediante 'tsyringe'.
-export default class TaskService {
+@injectable() 
+export default class OrderService {
     constructor(
         @inject(OrderRepository) private orderRepository: OrderRepository // Inyecta una instancia de TaskRepository en el constructor.
     ) {}
 
-    // Método para obtener todas las tareas.
+
     async getAllOrders() {
         return await this.orderRepository.findAll(); // Llama al método findAll del repositorio de tareas para obtener todas las tareas.
     }

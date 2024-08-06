@@ -26,7 +26,7 @@ export class Cart extends Model {
     })
     id!: number;
 
-    // Define la columna 'userId' como una clave foránea que referencia al modelo User.
+    // Define la columna FK 'userId'.
     @ForeignKey(() => User)
     @Column({
         type: DataType.INTEGER,

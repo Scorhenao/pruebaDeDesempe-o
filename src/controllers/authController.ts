@@ -8,16 +8,12 @@ const SECRET_KEY = 'your_secret_key'; // Define una clave secreta para firmar lo
 export default class AuthController {
     // Método estático para registrar un nuevo usuario.
     static async register(req: Request, res: Response) {
-        const { name, email, password, role } = req.body; // Extrae los datos del cuerpo de la solicitud.
+        const { email, password } = req.body;
 
-        // Valida el rol del usuario. Debe ser 'premium' o 'normal'.
-        if (!['premium', 'normal'].includes(role)) {
-            return res.status(400).json({ message: 'Invalid role' }); // Devuelve un error 400 si el rol es inválido.
-        }
+        const userService = container.resolve(UserService);
+        const user = await userService.createUser(email, password);
 
-        const userService = container.resolve(UserService); // Resuelve una instancia del servicio de usuarios desde el contenedor de dependencias.
-        const user = await userService.createUser({ name, email, password, role }); // Crea un nuevo usuario usando el servicio de usuarios.
-        res.status(201).json(user); // Devuelve el usuario creado con un código de estado 201 (Creado).
+        res.json(user);
     }
 
     // Método estático para iniciar sesión.
