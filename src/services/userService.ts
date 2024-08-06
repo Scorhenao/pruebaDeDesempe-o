@@ -39,21 +39,19 @@ export default class UserService {
     return await this.userRepository.create(email, password);
   }
 
+  // Metodo para iniciar session con token
   async login(email: string, password: string) {
-    const user = await this.userRepository.findByEmail(email); // Busca al usuario por correo electrónico en el repositorio.
-    if (!user || !(await user.validatePassword(password))) {
-        throw new Error('Credenciales inválidas'); // Lanza un error si las credenciales son inválidas.
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) {
+      throw new Error('Invalid email or password');
     }
-
-    // Genera un token JWT con la información del usuario.
-    const token = jwt.sign(
-        { id: user.id, role: user.role }, // Datos que se incluirán en el token.
-        'secret', // Usa tu clave secreta.
-        { expiresIn: '1h' } // Establece el tiempo de expiración del token.
-    );
-
-    return { token }; // Devuelve el token generado.
+    if (user.password !== password) {
+      throw new Error('Invalid email or password');
+    }
+    const token = jwt.sign({ userId: user.id }, 'secret', { expiresIn: '1h' });
+    return token;
   }
+
 }
 
 /**

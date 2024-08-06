@@ -1,9 +1,12 @@
 import { injectable } from 'tsyringe'; // Importa el decorador @injectable para permitir la inyección de dependencias.
 import { User } from '../models/user'; // Importa el modelo User para interactuar con la base de datos.
 import { Role } from '../models';
+import { Jwt } from 'jsonwebtoken';
 
 @injectable() // Marca la clase como inyectable, permitiendo que pueda ser inyectada en otros servicios o controladores.
 export default class UserRepository {
+    id: any;
+    role: any;
     // Método para obtener todos los usuarios de la base de datos.
     async findAll() {
         return await User.findAll(); // Utiliza el método findAll de Sequelize para obtener todas las instancias del modelo User.
@@ -45,11 +48,12 @@ export default class UserRepository {
 
     // Método para crear un nuevo usuario siempre como client que en la tabla roles es 2.
     async create(email: string, password: string) {
-        return await User.create({ email, password, role: 1 });
+        return await User.create({ email, password, roleId: 2 });
     }
 
+
     // Método para actualizar un usuario existente por su ID.
-    async update(id: number, updates: Partial<{ name: string, email: string, password: string, role: 'premium' | 'normal' }>) {
+    async update(id: number, updates: Partial<{ name: string, email: string, password: string, role: 'admin' | 'client' }>) {
         const user = await User.findByPk(id); // Encuentra el usuario por su ID.
         if (user) {
             return await user.update(updates); // Actualiza los campos del usuario y guarda los cambios en la base de datos.
@@ -57,12 +61,18 @@ export default class UserRepository {
         return null; // Devuelve null si el usuario no se encuentra.
     }
 
+    // generate token
+    // only refers to a type, but is being used as a value here problem .
+    generateToken() {
+        return Jwt.sign({ id: this.id, role: this.role },'secret_key', { expiresIn: '1h' });
+    }
+
     // Método para iniciar sesion con un usuario existente por su correo y contraseña.
-    async login (email:string, password:string):Promise<boolean>{
-        const user = await this.findByEmail(email);
-        if (!user || !(await user.validatePassword(password))) {
-            return false;
+    async login(email: string, password: string) {
+        const user = await User.findOne({ where: { email } });
+        if (user && await user.validatePassword(password)) {
+            return { token: user.generateToken() };
         }
-        return true;
+        return null;
     }
 }

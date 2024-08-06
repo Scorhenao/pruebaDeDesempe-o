@@ -20,6 +20,9 @@ import {
     timestamps: true, // Habilita la gestión automática de timestamps (createdAt y updatedAt).
   })
   export class User extends Model {
+    generateToken() {
+        throw new Error('Method not implemented.');
+    }
     // Define la columna 'id' como clave primaria con incremento automático.
     @PrimaryKey
     @AutoIncrement

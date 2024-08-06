@@ -32,17 +32,10 @@ export default class UserController {
     res.json(roles);
   }
 
+  // Método estático para iniciar session con token
   static async login(req: Request, res: Response) {
-    try {
-      const userService = container.resolve(UserService);
-      const token = await userService.login(req.body.email, req.body.password);
-      res.json({ message: "Login successful", token });
-    } catch (error) {
-      if (error instanceof Error) {
-        res.status(400).json({ message: error.message });
-      } else {
-        res.status(400).json({ message: "An unknown error occurred" });
-      }
-    }
+    const userService = container.resolve(UserService);
+    const user = await userService.login(req.body.email, req.body.password);
+    res.json(user);
   }
 }
