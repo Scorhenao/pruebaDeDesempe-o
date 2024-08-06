@@ -35,13 +35,12 @@ export default class UserRepository {
         return await User.findOne({ where: { id } });
     }
 
-    // Metodo para crear los roles admin y client en la entidad roles 
+    // Metodo para quemar los roles pricipales los roles admin y client en la entidad roles 
     async createRoles() {
         return await Role.bulkCreate([
-            { userId: 1, role: 'admin' },
-            { userId: 2, role: 'client' }
-        ])
-        // Este metodo crea roles admin y client en la entidad roles, si no existen.
+            { userId: 1, name: 'admin' },
+            { userId: 2, name: 'client' }
+        ]);
     }
 
     // Método para crear un nuevo usuario siempre como client que en la tabla roles es 2.

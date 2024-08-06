@@ -4,20 +4,18 @@ import { CreationAttributes } from 'sequelize'; // Importa CreationAttributes pa
 
 @injectable() // Marca la clase como inyectable, permitiendo que pueda ser inyectada en otros servicios o controladores.
 export default class OrderRepository {
-    // Método para obtener todas las tareas de la base de datos.
     async findAll() {
-        return await Order.findAll(); // Utiliza el método findAll de Sequelize para obtener todas las instancias del modelo Task.
+        return await Order.findAll(); // Utiliza el método findAll de Sequelize para obtener todas las instancias del modelo
     }
 
-    // Método para obtener una tarea específica por su ID.
     async findById(id: number): Promise<Order | null> {
         return await Order.findByPk(id); // Utiliza el método findByPk de Sequelize para obtener una tarea por su clave primaria (ID).
     }
 
-    // Método para obtener todas las tareas asociadas a un usuario específico.
+    // Método para obtener todo específico.
     async findByUserId(orderId: number) {
         return await Order.findAll({ 
-            where: { orderId } // Filtra las tareas por el ID del usuario
+            where: { orderId } // Filtra por el ID del usuario
         });
     }
 
