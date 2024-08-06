@@ -1,7 +1,8 @@
 import { injectable } from 'tsyringe'; // Importa el decorador @injectable para permitir la inyección de dependencias.
 import { User } from '../models/user'; // Importa el modelo User para interactuar con la base de datos.
 import { Role } from '../models';
-import { Jwt } from 'jsonwebtoken';
+import  Jwt  from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 @injectable() // Marca la clase como inyectable, permitiendo que pueda ser inyectada en otros servicios o controladores.
 export default class UserRepository {
@@ -48,7 +49,9 @@ export default class UserRepository {
 
     // Método para crear un nuevo usuario siempre como client que en la tabla roles es 2.
     async create(email: string, password: string) {
-        return await User.create({ email, password, roleId: 2 });
+        //encryptar contraseña
+        const hashedPassword = await bcrypt.hash(password, 10);
+        return await User.create({ email, password: hashedPassword, roleId: 2 });
     }
 
 
